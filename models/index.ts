@@ -20,9 +20,12 @@ export function initModels(sequelize: Sequelize) {
   Customer.initModel(sequelize)
   Promotion.initModel(sequelize)
 
-  Product.hasMany(Bundle, {
+  Product.belongsToMany(Bundle, {
     as: 'bundles',
-    foreignKey: 'prod_id'
+    through: Bundle,
+    foreignKey: 'prod_id',
+    otherKey: 'bundle_prod_id',
+    onDelete: 'CASCADE'
   })
   Product.hasMany(ItemCode, {
     as: 'itemCodes',
@@ -42,7 +45,7 @@ export function initModels(sequelize: Sequelize) {
   })
   ItemCode.belongsTo(Customer, {
     as: 'owner',
-    foreignKey: 'own_by'
+    foreignKey: 'customer_id'
   })
   ItemCode.belongsTo(Product, {
     as: 'product',

@@ -10,10 +10,6 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      promoProdId: {
-        type: DataTypes.INTEGER,
-        field: 'promo_prod_id'
-      },
       discountPercentage: {
         type: DataTypes.FLOAT,
         field: 'discount_percentage'
@@ -29,6 +25,10 @@ module.exports = {
       updatedAt: {
         type: DataTypes.DATE,
         field: 'updated_at'
+      },
+      promoProdId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        field: 'promo_prod_id'
       }
     })
   },

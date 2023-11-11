@@ -23,9 +23,9 @@ module.exports = {
     })
     
     await queryInterface.addConstraint('item_codes', {
-      fields: ['own_by'],
+      fields: ['customer_id'],
       type: 'foreign key',
-      name: 'item_codes_own_by_fkey',
+      name: 'item_codes_customer_id_fkey',
       references: {
         table: 'customers',
         field: 'id'
@@ -38,16 +38,6 @@ module.exports = {
       name: 'item_codes_prod_id_fkey',
       references: {
         table: 'products',
-        field: 'id'
-      }
-    })
-    
-    await queryInterface.addConstraint('item_codes', {
-      fields: ['customer_id'],
-      type: 'foreign key',
-      name: 'item_codes_customer_id_fkey',
-      references: {
-        table: 'customers',
         field: 'id'
       }
     })
@@ -65,9 +55,8 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     await queryInterface.removeConstraint('bundles', 'bundles_prod_id_fkey')
     await queryInterface.removeConstraint('bundles', 'bundles_bundle_prod_id_fkey')
-    await queryInterface.removeConstraint('item_codes', 'item_codes_own_by_fkey')
-    await queryInterface.removeConstraint('item_codes', 'item_codes_prod_id_fkey')
     await queryInterface.removeConstraint('item_codes', 'item_codes_customer_id_fkey')
+    await queryInterface.removeConstraint('item_codes', 'item_codes_prod_id_fkey')
     await queryInterface.removeConstraint('promotions', 'promotions_promo_prod_id_fkey')
   }
 };

@@ -20,7 +20,6 @@ export class Promotion extends Model<
   InferCreationAttributes<Promotion, {omit: PromotionAssociations}>
 > {
   declare id: CreationOptional<number>
-  declare promoProdId: number | null
   declare discountPercentage: number | null
   declare expireDate: Date | null
   declare createdAt: CreationOptional<Date>
@@ -43,9 +42,6 @@ export class Promotion extends Model<
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
-      },
-      promoProdId: {
-        type: DataTypes.INTEGER
       },
       discountPercentage: {
         type: DataTypes.FLOAT

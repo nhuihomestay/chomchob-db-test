@@ -1,5 +1,15 @@
 import {
   Association,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManySetAssociationsMixin,
+  BelongsToManyAddAssociationMixin,
+  BelongsToManyAddAssociationsMixin,
+  BelongsToManyCreateAssociationMixin,
+  BelongsToManyRemoveAssociationMixin,
+  BelongsToManyRemoveAssociationsMixin,
+  BelongsToManyHasAssociationMixin,
+  BelongsToManyHasAssociationsMixin,
+  BelongsToManyCountAssociationsMixin,
   CreationOptional,
   DataTypes,
   HasManyGetAssociationsMixin,
@@ -42,18 +52,18 @@ export class Product extends Model<
   declare createdAt: CreationOptional<Date>
   declare updatedAt: CreationOptional<Date>
 
-  // Product hasMany Bundle (as Bundles)
+  // Product belongsToMany Bundle (as Bundles)
   declare bundles?: NonAttribute<Bundle[]>
-  declare getBundles: HasManyGetAssociationsMixin<Bundle>
-  declare setBundles: HasManySetAssociationsMixin<Bundle, number>
-  declare addBundle: HasManyAddAssociationMixin<Bundle, number>
-  declare addBundles: HasManyAddAssociationsMixin<Bundle, number>
-  declare createBundle: HasManyCreateAssociationMixin<Bundle, 'prodId'>
-  declare removeBundle: HasManyRemoveAssociationMixin<Bundle, number>
-  declare removeBundles: HasManyRemoveAssociationsMixin<Bundle, number>
-  declare hasBundle: HasManyHasAssociationMixin<Bundle, number>
-  declare hasBundles: HasManyHasAssociationsMixin<Bundle, number>
-  declare countBundles: HasManyCountAssociationsMixin
+  declare getBundles: BelongsToManyGetAssociationsMixin<Bundle>
+  declare setBundles: BelongsToManySetAssociationsMixin<Bundle, number>
+  declare addBundle: BelongsToManyAddAssociationMixin<Bundle, number>
+  declare addBundles: BelongsToManyAddAssociationsMixin<Bundle, number>
+  declare createBundle: BelongsToManyCreateAssociationMixin<Bundle>
+  declare removeBundle: BelongsToManyRemoveAssociationMixin<Bundle, number>
+  declare removeBundles: BelongsToManyRemoveAssociationsMixin<Bundle, number>
+  declare hasBundle: BelongsToManyHasAssociationMixin<Bundle, number>
+  declare hasBundles: BelongsToManyHasAssociationsMixin<Bundle, number>
+  declare countBundles: BelongsToManyCountAssociationsMixin
   
   // Product hasMany ItemCode (as ItemCodes)
   declare itemCodes?: NonAttribute<ItemCode[]>
@@ -61,7 +71,7 @@ export class Product extends Model<
   declare setItemCodes: HasManySetAssociationsMixin<ItemCode, number>
   declare addItemCode: HasManyAddAssociationMixin<ItemCode, number>
   declare addItemCodes: HasManyAddAssociationsMixin<ItemCode, number>
-  declare createItemCode: HasManyCreateAssociationMixin<ItemCode, 'prodId'>
+  declare createItemCode: HasManyCreateAssociationMixin<ItemCode>
   declare removeItemCode: HasManyRemoveAssociationMixin<ItemCode, number>
   declare removeItemCodes: HasManyRemoveAssociationsMixin<ItemCode, number>
   declare hasItemCode: HasManyHasAssociationMixin<ItemCode, number>
