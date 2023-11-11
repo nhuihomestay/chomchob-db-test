@@ -21,6 +21,7 @@ export class ItemCode extends Model<
   InferCreationAttributes<ItemCode, {omit: ItemCodeAssociations}>
 > {
   declare id: CreationOptional<number>
+  declare itemCode: String | null
   declare ownBy: number | null
   declare prodId: number | null
   declare isRedeem: boolean | null
@@ -51,6 +52,9 @@ export class ItemCode extends Model<
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
+      },
+      itemCode: {
+        type: DataTypes.STRING
       },
       ownBy: {
         type: DataTypes.INTEGER
