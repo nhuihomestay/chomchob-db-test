@@ -1,30 +1,49 @@
 import {
+  Association,
+  BelongsToGetAssociationMixin,
+  BelongsToSetAssociationMixin,
+  BelongsToCreateAssociationMixin,
   CreationOptional,
   DataTypes,
   InferCreationAttributes,
   InferAttributes,
   Model,
+  NonAttribute,
   Sequelize
 } from 'sequelize'
+import type { Customer } from './Customer'
+import type { Product } from './Product'
+
+type ItemCodeAssociations = 'owner' | 'product'
 
 export class ItemCode extends Model<
-  InferAttributes<ItemCode>,
-  InferCreationAttributes<ItemCode>
+  InferAttributes<ItemCode, {omit: ItemCodeAssociations}>,
+  InferCreationAttributes<ItemCode, {omit: ItemCodeAssociations}>
 > {
   declare id: CreationOptional<number>
-  declare ownBy: number
-  declare discountPercentage: number | null
-  declare expireDate: string | null
+  declare ownBy: number | null
+  declare prodId: number | null
+  declare isRedeem: boolean | null
   declare createdAt: CreationOptional<Date>
   declare updatedAt: CreationOptional<Date>
 
-  static associate(models: any) {
-    ItemCode.belongsTo(models.Customer, {
-      foreignKey: 'ownBy',
-      as: 'owner',
-    });
-  }
+  // ItemCode belongsTo Customer (as Owner)
+  declare owner?: NonAttribute<Customer>
+  declare getOwner: BelongsToGetAssociationMixin<Customer>
+  declare setOwner: BelongsToSetAssociationMixin<Customer, number>
+  declare createOwner: BelongsToCreateAssociationMixin<Customer>
   
+  // ItemCode belongsTo Product (as Product)
+  declare product?: NonAttribute<Product>
+  declare getProduct: BelongsToGetAssociationMixin<Product>
+  declare setProduct: BelongsToSetAssociationMixin<Product, number>
+  declare createProduct: BelongsToCreateAssociationMixin<Product>
+  
+  declare static associations: {
+    owner: Association<ItemCode, Customer>,
+    product: Association<ItemCode, Product>
+  }
+
   static initModel(sequelize: Sequelize): typeof ItemCode {
     ItemCode.init({
       id: {
@@ -34,14 +53,13 @@ export class ItemCode extends Model<
         allowNull: false
       },
       ownBy: {
-        type: DataTypes.INTEGER,
-        allowNull: false
+        type: DataTypes.INTEGER
       },
-      discountPercentage: {
-        type: DataTypes.FLOAT
+      prodId: {
+        type: DataTypes.INTEGER
       },
-      expireDate: {
-        type: DataTypes.DATEONLY
+      isRedeem: {
+        type: DataTypes.BOOLEAN
       },
       createdAt: {
         type: DataTypes.DATE

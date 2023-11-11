@@ -13,52 +13,41 @@ import {
 } from 'sequelize'
 import type { Product } from './Product'
 
-type BundleAssociations = 'product' | 'bundleProduct'
+type PromotionAssociations = 'product'
 
-export class Bundle extends Model<
-  InferAttributes<Bundle, {omit: BundleAssociations}>,
-  InferCreationAttributes<Bundle, {omit: BundleAssociations}>
+export class Promotion extends Model<
+  InferAttributes<Promotion, {omit: PromotionAssociations}>,
+  InferCreationAttributes<Promotion, {omit: PromotionAssociations}>
 > {
   declare id: CreationOptional<number>
-  declare prodId: number | null
-  declare bundleProdId: number | null
-  declare bundlePrice: number | null
+  declare promoProdId: number | null
+  declare discountPercentage: number | null
   declare expireDate: Date | null
   declare createdAt: CreationOptional<Date>
   declare updatedAt: CreationOptional<Date>
 
-  // Bundle belongsTo Product (as Product)
+  // Promotion belongsTo Product (as Product)
   declare product?: NonAttribute<Product>
   declare getProduct: BelongsToGetAssociationMixin<Product>
   declare setProduct: BelongsToSetAssociationMixin<Product, number>
   declare createProduct: BelongsToCreateAssociationMixin<Product>
   
-  // Bundle belongsTo Product (as BundleProduct)
-  declare bundleProduct?: NonAttribute<Product>
-  declare getBundleProduct: BelongsToGetAssociationMixin<Product>
-  declare setBundleProduct: BelongsToSetAssociationMixin<Product, number>
-  declare createBundleProduct: BelongsToCreateAssociationMixin<Product>
-  
   declare static associations: {
-    product: Association<Bundle, Product>,
-    bundleProduct: Association<Bundle, Product>
+    product: Association<Promotion, Product>
   }
 
-  static initModel(sequelize: Sequelize): typeof Bundle {
-    Bundle.init({
+  static initModel(sequelize: Sequelize): typeof Promotion {
+    Promotion.init({
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      prodId: {
+      promoProdId: {
         type: DataTypes.INTEGER
       },
-      bundleProdId: {
-        type: DataTypes.INTEGER
-      },
-      bundlePrice: {
+      discountPercentage: {
         type: DataTypes.FLOAT
       },
       expireDate: {
@@ -74,6 +63,6 @@ export class Bundle extends Model<
       sequelize
     })
     
-    return Bundle
+    return Promotion
   }
 }

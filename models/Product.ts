@@ -1,34 +1,85 @@
 import {
+  Association,
   CreationOptional,
   DataTypes,
+  HasManyGetAssociationsMixin,
+  HasManySetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyAddAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  HasManyRemoveAssociationMixin,
+  HasManyRemoveAssociationsMixin,
+  HasManyHasAssociationMixin,
+  HasManyHasAssociationsMixin,
+  HasManyCountAssociationsMixin,
+  HasOneGetAssociationMixin,
+  HasOneSetAssociationMixin,
+  HasOneCreateAssociationMixin,
   InferCreationAttributes,
   InferAttributes,
   Model,
+  NonAttribute,
   Sequelize
 } from 'sequelize'
+import type { Bundle } from './Bundle'
+import type { ItemCode } from './ItemCode'
+import type { Promotion } from './Promotion'
+
+type ProductAssociations = 'bundles' | 'itemCodes' | 'promotion'
 
 export class Product extends Model<
-  InferAttributes<Product>,
-  InferCreationAttributes<Product>
+  InferAttributes<Product, {omit: ProductAssociations}>,
+  InferCreationAttributes<Product, {omit: ProductAssociations}>
 > {
   declare id: CreationOptional<number>
   declare prodName: string | null
   declare prodDetail: string | null
   declare prodPrice: number
-  declare openSaleDate: string | null
-  declare endSaleDate: string | null
-  declare discountStartDate: string | null
-  declare discountEndDate: string | null
+  declare openSaleDate: Date | null
+  declare endSaleDate: Date | null
+  declare discountStartDate: Date | null
+  declare discountEndDate: Date | null
   declare createdAt: CreationOptional<Date>
   declare updatedAt: CreationOptional<Date>
 
-  static associate(models: any) {
-    Product.hasMany(models.Bundle, {
-      foreignKey: 'prodId',
-      as: 'bundles',
-    });
-  }
+  // Product hasMany Bundle (as Bundles)
+  declare bundles?: NonAttribute<Bundle[]>
+  declare getBundles: HasManyGetAssociationsMixin<Bundle>
+  declare setBundles: HasManySetAssociationsMixin<Bundle, number>
+  declare addBundle: HasManyAddAssociationMixin<Bundle, number>
+  declare addBundles: HasManyAddAssociationsMixin<Bundle, number>
+  declare createBundle: HasManyCreateAssociationMixin<Bundle, 'prodId'>
+  declare removeBundle: HasManyRemoveAssociationMixin<Bundle, number>
+  declare removeBundles: HasManyRemoveAssociationsMixin<Bundle, number>
+  declare hasBundle: HasManyHasAssociationMixin<Bundle, number>
+  declare hasBundles: HasManyHasAssociationsMixin<Bundle, number>
+  declare countBundles: HasManyCountAssociationsMixin
   
+  // Product hasMany ItemCode (as ItemCodes)
+  declare itemCodes?: NonAttribute<ItemCode[]>
+  declare getItemCodes: HasManyGetAssociationsMixin<ItemCode>
+  declare setItemCodes: HasManySetAssociationsMixin<ItemCode, number>
+  declare addItemCode: HasManyAddAssociationMixin<ItemCode, number>
+  declare addItemCodes: HasManyAddAssociationsMixin<ItemCode, number>
+  declare createItemCode: HasManyCreateAssociationMixin<ItemCode, 'prodId'>
+  declare removeItemCode: HasManyRemoveAssociationMixin<ItemCode, number>
+  declare removeItemCodes: HasManyRemoveAssociationsMixin<ItemCode, number>
+  declare hasItemCode: HasManyHasAssociationMixin<ItemCode, number>
+  declare hasItemCodes: HasManyHasAssociationsMixin<ItemCode, number>
+  declare countItemCodes: HasManyCountAssociationsMixin
+  
+  // Product hasOne Promotion (as Promotion)
+  declare promotion?: NonAttribute<Promotion>
+  declare getPromotion: HasOneGetAssociationMixin<Promotion>
+  declare setPromotion: HasOneSetAssociationMixin<Promotion, number>
+  declare createPromotion: HasOneCreateAssociationMixin<Promotion>
+  
+  declare static associations: {
+    bundles: Association<Product, Bundle>,
+    itemCodes: Association<Product, ItemCode>,
+    promotion: Association<Product, Promotion>
+  }
+
   static initModel(sequelize: Sequelize): typeof Product {
     Product.init({
       id: {
@@ -48,16 +99,16 @@ export class Product extends Model<
         allowNull: false
       },
       openSaleDate: {
-        type: DataTypes.DATEONLY
+        type: DataTypes.DATE
       },
       endSaleDate: {
-        type: DataTypes.DATEONLY
+        type: DataTypes.DATE
       },
       discountStartDate: {
-        type: DataTypes.DATEONLY
+        type: DataTypes.DATE
       },
       discountEndDate: {
-        type: DataTypes.DATEONLY
+        type: DataTypes.DATE
       },
       createdAt: {
         type: DataTypes.DATE
