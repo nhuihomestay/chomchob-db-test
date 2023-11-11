@@ -11,4 +11,4 @@
 ### ER Diagram
 - Details: https://dbdiagram.io/d/654f487a7d8bbd6465f8d00c
 
-![ERD](erd_01.jpg)
+![ERD](erd_01.png)
