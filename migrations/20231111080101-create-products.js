@@ -24,19 +24,19 @@ module.exports = {
         allowNull: false
       },
       openSaleDate: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         field: 'open_sale_date'
       },
       endSaleDate: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         field: 'end_sale_date'
       },
       discountStartDate: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         field: 'discount_start_date'
       },
       discountEndDate: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         field: 'discount_end_date'
       },
       createdAt: {

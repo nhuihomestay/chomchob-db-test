@@ -2,7 +2,7 @@ const DataTypes = require('sequelize').DataTypes
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('bundles', {
+    await queryInterface.createTable('promotions', {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
         field: 'id',
@@ -10,17 +10,13 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      prodId: {
+      promoProdId: {
         type: DataTypes.INTEGER,
-        field: 'prod_id'
+        field: 'promo_prod_id'
       },
-      bundleProdId: {
-        type: DataTypes.INTEGER,
-        field: 'bundle_prod_id'
-      },
-      bundlePrice: {
+      discountPercentage: {
         type: DataTypes.FLOAT,
-        field: 'bundle_price'
+        field: 'discount_percentage'
       },
       expireDate: {
         type: DataTypes.DATE,
@@ -37,6 +33,6 @@ module.exports = {
     })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('bundles');
+    await queryInterface.dropTable('promotions');
   },
 };

@@ -12,16 +12,15 @@ module.exports = {
       },
       ownBy: {
         type: DataTypes.INTEGER,
-        field: 'own_by',
-        allowNull: false
+        field: 'own_by'
       },
-      discountPercentage: {
-        type: DataTypes.FLOAT,
-        field: 'discount_percentage'
+      prodId: {
+        type: DataTypes.INTEGER,
+        field: 'prod_id'
       },
-      expireDate: {
-        type: DataTypes.DATEONLY,
-        field: 'expire_date'
+      isRedeem: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_redeem'
       },
       createdAt: {
         type: DataTypes.DATE,
